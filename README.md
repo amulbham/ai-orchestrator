@@ -1,4 +1,4 @@
-# AI-Orchestrator (local exchange folder, NOT part of the repo)
+# AI-Orchestrator (local exchange folder, versioned in amulbham/ai-orchestrator; not part of cybernetics-mbp)
 Models exchange artifacts here. They never share a writable checkout. Put no secrets, keys, .env or CLI credential files here, and never edit ~/.codex/config.toml or ~/.grok/.
 
 inbox/     draft tickets and prompts
@@ -48,7 +48,14 @@ Fail-closed and mechanical. Reads only reviewers named in <Id>-manifest.txt and 
 Groups (key = path ignoring line + section): CONSENSUS (one finding each, same severity), SEVERITY-SPLIT (one each, different severity), AMBIGUOUS (a reviewer has several on a shared key; all listed unpaired), SINGLE-REVIEWER: CODEX-ONLY / GROK-ONLY, NEW FINDINGS (NOT AUTHORIZED), PLANNER DISPOSITION (blank). Text is verbatim, never merged. Do not rank reviewers by counts. The planner decides; Claude never writes summary.md.
 
 ## Reviewer calibration (observational, not an approval gate)
-Log one row per review in scratch\calibration.md: did reviewers tell a known-good ticket from a defective one, did REQUIRED findings predict later problems, does either reviewer systematically overreach. Counts are never a score.
+Canonical log: `calibration.md` at the root of this repo (scratch\ stays unversioned). The Planner appends one row at each ticket closure, columns `Ticket | Risk | Reviewers | B/R accepted | B/R rejected | Retries or deviations | Amul interventions`. Questions to keep asking: did reviewers tell a known-good ticket from a defective one, did REQUIRED findings predict later problems, does either reviewer systematically overreach. Counts are never a score.
+
+## Executor start and Coordinator relay
+- `briefs/executor-brief.md` is the one template for starting an Executor.
+- After Amul approves a seal on a decision card, the Planner sends the Coordinator a self-sufficient request (the brief filled in) through the Planner's cross-session message to the coordinator session. The Coordinator starts the fresh Executor without a second approval.
+- Briefs must stand alone: only Amul's typed messages reach a machine session.
+- Proof is one bounded relay in the end-to-end run: an Executor must start from a Planner message. If the relay cannot be delivered, stop and report; never fall back to an improvised brief.
+- Push permission reduces interruption, not the boundary: `main` is always denied and production promotion keeps Amul's typed go.
 
 ## Tests
   powershell -NoProfile -File scratch\tests\run-tests.ps1   # fixtures: grouping, fail-closed, stale-file and manifest checks
