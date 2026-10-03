@@ -1,0 +1,12 @@
+scratch/
+inbox/
+reviews/
+planner-handoff.md
+executor-handoff.md
+*.env
+.env*
+*.pem
+*.key
+*credential*
+*token*.json
+*secret*
