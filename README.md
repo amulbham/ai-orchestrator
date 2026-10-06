@@ -57,6 +57,13 @@ Canonical log: `calibration.md` at the root of this repo (scratch\ stays unversi
 - Proof is one bounded relay in the end-to-end run: an Executor must start from a Planner message. If the relay cannot be delivered, stop and report; never fall back to an improvised brief.
 - Push permission reduces interruption, not the boundary: `main` is always denied and production promotion keeps Amul's typed go.
 
+## Where we left it (2026-10-06, orchestrator work paused for website work)
+- TP0 to TP2.6: closed. TP2.7 (workflow friction): edits, 14/14 guard unit tests and local live proofs done; branch `claude/execute-TP2.7` in cybernetics-mbp. Closure still needs Amul's typed go to fast-forward `staging` and a green staging build.
+- Carried forward from TP2.7: relay proof (a Planner message must start an Executor; no improvised fallback), permission-prompt outcome (local not observed, cloud not run), and the calibration row at closure. Stray remote branch `claude/x` in cybernetics-mbp may need deleting.
+- Known issue: the push guard reads a trailing redirect such as `2>&1` as a branch name and can warn spuriously (warning only).
+- Stopping rule: infrastructure is frozen. No new TP ticket without a named real failure. Next work is the website, tracked in the Sprint 18 contract.
+- To resume: read the TP2.7 ticket's completion report, run `npm run project:status` in `site/`, then do the carried-forward items above.
+
 ## Tests
   powershell -NoProfile -File scratch\tests\run-tests.ps1   # fixtures: grouping, fail-closed, stale-file and manifest checks
 
